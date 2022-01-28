@@ -12,12 +12,12 @@ player::player(std::string input_name, int start_hp, int max_hp, int start_attac
 
 player::~player(){}
 
-void player::set_name(std::string name){name = name;}
-void player::set_hp(int hp){hp = hp;}
-void player::set_max_hp(int max_hp){max_hp = max_hp;}
-void player::set_attackpoints(int attack_points){attack_points = attack_points;}
-void player::set_defencepoints(int defence_points){defence_points = defence_points;}
-void player::add_numfights(){num_fights++;}
+// void player::set_name(std::string name){name = name;}
+void player::set_hp(int hp){this->hp = hp;}
+void player::set_max_hp(int max_hp){this->max_hp = max_hp;}
+void player::set_attackpoints(int attack_points){this->attack_points = attack_points;}
+void player::set_defencepoints(int defence_points){this->defence_points = defence_points;}
+void player::add_numfights(){this->num_fights+=1;}
 
 std::string player::get_name(){return name;}
 int player::get_hp(){return hp;}
