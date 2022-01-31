@@ -10,6 +10,9 @@
 #include<memory>
 #include "player.hpp"
 #include "gameplay.hpp"
+#include "trainee.hpp"
+#include "fighter.hpp"
+#include "mage.hpp"
 
 int main(){
     // Creating the main menu
@@ -21,12 +24,18 @@ int main(){
         std::string player_name;
         std::cout << "Enter your player name: ";
         std::cin >> player_name;
-        // Create a player hero
-        player hero(player_name, 55, 100, 25, 10);
-        std::unique_ptr<player> good = std::make_unique<player>(hero);
+
+        // Create a player hero_trainee
+        trainee hero_trainee(player_name, 55, 100, 19, 10);
+        std::unique_ptr<player> good = std::make_unique<trainee>(hero_trainee);         // players start game as a trainee
         assert(good->get_hp() > 0);
         assert(good->get_max_hp() > 0);
-        std::cout << "Hello " << good->get_name() << ", welcome to the game!" << std::endl;  // welcome message to the player
+        std::cout << "Hello " << good->get_name() << ", welcome to the game! You are a trainee." << std::endl;  // welcome message to the player
+
+        // Create the enemy class
+        std::unique_ptr<player> bad;
+
+        int player_level_check = 0;
         
         // show in-game menu while hp > 0
         while (good->get_hp() > 0){
@@ -35,10 +44,37 @@ int main(){
             std::cout << "Remember to save your progress before quiting the game: ";
             std::cin >> ingame_choice;
 
+            // Check if the player has levelled up
+            if ((good->get_level() > 3) && (good->get_level() < 5) && (player_level_check == 0)) {
+                // Upgrade the player
+                fighter hero_fighter(player_name, 100, 200, 50, 30);
+                good = std::make_unique<fighter>(hero_fighter);
+                std::cout << "You upgraded to a fighter!" << std::endl;
+                player_level_check = 1;         // Put a value of player_lelvel_check = 1 so that fighter level is not checked again
+            }
+            else if ((good->get_level() >= 5) && (player_level_check == 1)) {
+                // Upgrade the player
+                mage hero_mage(player_name, 200, 300, 100, 50, 20, 50, 0);
+                good = std::make_unique<mage>(hero_mage);
+                std::cout << "You upgraded to a mage!" << std::endl;
+                player_level_check = 2;         // Put a value of player_lelvel_check = 2 so that mage level is not checked again
+            }
+            
+
             if (ingame_choice == 1){
                 // fight with the enemy
-                player enemy("Goblin", 12, 25, 15, 15);       // create a player enemy
-                std::unique_ptr<player> bad = std::make_unique<player>(enemy);
+                if (good->get_position() == "Fighter") {
+                    player enemy("MegaGob", 70, 145, 35, 25);       // create a player enemy
+                    bad = std::make_unique<player>(enemy);
+                }
+                else if (good->get_position() == "Mage") {
+                    player enemy("UltiGob", 170, 245, 75, 65);       // create a player enemy
+                    bad = std::make_unique<player>(enemy);
+                }
+                else {
+                    player enemy("Gob", 20, 40, 15, 10);       // create a player enemy
+                    bad = std::make_unique<player>(enemy);
+                }
                 assert(bad->get_hp() > 0);
                 assert(bad->get_max_hp() > 0);
                 std::cout << "Beware, "<< bad->get_name() << " has appeared!" << std::endl;
@@ -53,9 +89,10 @@ int main(){
                     gameplay::fight(good, bad);       // while either the player or the enemy is alive, fight continues
                     if (!bad->is_alive()) {
                         std::cout << bad->get_name() << " died" << std::endl;
+                        good->add_level();           // level up player after every successful fight
                     }
                     if (!good->is_alive()) {
-                        std::cout << "You died" << std::endl;
+                        std::cout << "You died" << std::endl;   // Not saving the round in which player died
                         return EXIT_SUCCESS;
                     }
                 }

@@ -7,7 +7,7 @@ project (
 include_directories(include)
 
 #Add the sources
-set(SOURCES src/main.cpp src/player.cpp src/gameplay.cpp)
+set(SOURCES src/main.cpp src/player.cpp src/gameplay.cpp src/trainee.cpp src/mage.cpp src/fighter.cpp)
 
 #Add executables
 add_executable(rpg ${SOURCES})

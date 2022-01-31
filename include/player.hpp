@@ -19,9 +19,10 @@ private:
     int defence_points;
     int max_hp;
     int num_fights = 0;
+    int level = 1;
 public:  
     player(std::string input_name, int start_hp, int max_hp, int start_attackpoints, int start_defencepoints);
-    ~player();
+    virtual ~player();
 
     // Setter functions
     // void set_name(std::string name);
@@ -30,6 +31,7 @@ public:
     void set_attackpoints(int attack_points);
     void set_defencepoints(int defence_points);
     void add_numfights();
+    void add_level();
     
     // Getter functions
     std::string get_name();
@@ -38,11 +40,16 @@ public:
     int get_attackpoints();
     int get_defencepoints();
     int get_numfights();
+    int get_level();
 
     // Other methods
     void showstats();   // show current statistics of the player
     bool is_alive();    // check if the player is alive
-    void restore_hp();  // recover the player, restore the hp to it's max
+    virtual void restore_hp();  // recover the player, restore the hp to it's max
+    virtual std::string get_position();     // get the position of the player in the rankings
+    virtual bool is_criticalstrike();       // check if a player has hit a critical strike
+    virtual int is_magicused();            // check if player using magic
+    virtual int magic_attack(int spell_num);   // magic attack
 };
 
 

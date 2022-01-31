@@ -18,6 +18,7 @@ void player::set_max_hp(int max_hp){this->max_hp = max_hp;}
 void player::set_attackpoints(int attack_points){this->attack_points = attack_points;}
 void player::set_defencepoints(int defence_points){this->defence_points = defence_points;}
 void player::add_numfights(){this->num_fights+=1;}
+void player::add_level(){this->level+=1;}
 
 std::string player::get_name(){return name;}
 int player::get_hp(){return hp;}
@@ -25,6 +26,7 @@ int player::get_max_hp(){return max_hp;}
 int player::get_attackpoints(){return attack_points;}
 int player::get_defencepoints(){return defence_points;}
 int player::get_numfights(){return num_fights;}
+int player::get_level(){return level;}
 
 void player::showstats(){
     std::cout << "Name: " << name << std::endl;
@@ -32,8 +34,16 @@ void player::showstats(){
     std::cout << "Maximum HP: " << max_hp << std::endl;
     std::cout << "Attack Points: " << attack_points << std::endl;
     std::cout << "Defence Points: " << defence_points << std::endl;
+    std::cout << "Character Level: " << level << std::endl;
 }
 
 bool player::is_alive(){return (hp>0) ? true:false;}
 
 void player::restore_hp(){hp = max_hp;}
+
+std::string player::get_position(){return "Player";}
+
+bool player::is_criticalstrike(){return false;}
+int player::is_magicused(){return false;}
+
+int player::magic_attack(int spell_num){return 0;}
