@@ -1,4 +1,5 @@
 #include<iostream>
+#include<gtest/gtest.h>
 #include<string>
 #include<vector>
 #include<algorithm>
@@ -15,6 +16,10 @@
 #include "mage.hpp"
 
 int main(){
+    // Google Testing
+    ::testing::InitGoogleTest();
+    RUN_ALL_TESTS();
+
     // Creating the main menu
     int choice;
     std::cout << "Enter 1 to start a new game, 2 to load previous game and 3 to exit: ";
