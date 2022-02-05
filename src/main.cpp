@@ -14,11 +14,12 @@
 #include "trainee.hpp"
 #include "fighter.hpp"
 #include "mage.hpp"
+#include "bot_simulation.hpp"
 
 int main(){
     // Creating the main menu
     int choice;
-    std::cout << "Enter 1 to start a new game, 2 to load previous game and 3 to exit: ";
+    std::cout << "Enter 1 to start a new game, 2 to load previous game, 3 to simulate and 4 to exit: ";
     std::cin >> choice;
     if (choice == 1) {
         std::cout << "New Game" << std::endl;
@@ -136,6 +137,12 @@ int main(){
     }
 
     else if (choice == 3) {
+        std::cout << "Starting simulation with bot" << std::endl;
+        bot_simulation::simulate();
+    }
+    
+
+    else if (choice == 4) {
         std::cout << "Exit Game" << std::endl;
         return EXIT_SUCCESS;
     }

@@ -17,7 +17,7 @@ class mage: virtual public player
 private:
     int mana;
     int max_mana;
-    enum magic {Hocus, Pocus, Cadabra};
+    enum magic {Hocus, Pocus, Cadabra, Iceball, Fireball, Lightning};
     int magic_num = 0;
 public:
     mage(std::string input_name, int start_hp, int max_hp, int start_attackpoints, int start_defencepoints, int start_mana, int max_mana, int start_magic);

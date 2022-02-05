@@ -36,8 +36,6 @@ void gameplay::fight(const std::unique_ptr<player>& game_player, const std::uniq
         
     }
     
-    
-
     int enemy_damage = (opponent_player->get_attackpoints()) - (game_player->get_defencepoints()) + (rand()%10)+1;
     assert(hero_damage != 0);
     assert(enemy_damage != 0);
