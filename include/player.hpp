@@ -20,6 +20,7 @@ private:
     int max_hp;
     int num_fights = 0;
     int level = 1;
+    int gold = 0;
 public:  
     player(std::string input_name, int start_hp, int max_hp, int start_attackpoints, int start_defencepoints);
     virtual ~player();
@@ -32,6 +33,7 @@ public:
     void set_defencepoints(int defence_points);
     void add_numfights();
     void add_level();
+    void add_gold(int gold_amount);
     
     // Getter functions
     std::string get_name();
@@ -41,6 +43,7 @@ public:
     int get_defencepoints();
     int get_numfights();
     int get_level();
+    int get_gold();
 
     // Other methods
     void showstats();   // show current statistics of the player

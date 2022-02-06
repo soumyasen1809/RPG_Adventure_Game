@@ -12,6 +12,7 @@
 #include "fighter.hpp"
 #include "trainee.hpp"
 #include "mage.hpp"
+#include <jsoncpp/json/json.h>
 
 // gameplay::gameplay(/* args */){}
 
@@ -24,6 +25,8 @@ void gameplay::fight(const std::unique_ptr<player>& game_player, const std::uniq
         if (game_player->is_criticalstrike()) {
             std::cout << "Critical strike!" << std::endl;
             hero_damage = 1.5*(game_player->get_attackpoints());
+            game_player->add_gold(5);
+            std::cout << "$$ You get 5 gold for a critical strike $$" << std::endl;
         }
     }
     if (game_player->get_position() == "Mage") {          // magic use for mage
@@ -32,6 +35,8 @@ void gameplay::fight(const std::unique_ptr<player>& game_player, const std::uniq
             std::cout << "Magic used!" << std::endl;
             auto mana_attackpoints = game_player->magic_attack(magic_number);
             hero_damage = mana_attackpoints*game_player->get_attackpoints();
+            game_player->add_gold(1);
+            std::cout << "$$ You get 1 gold for magic $$" << std::endl;
         }
         
     }
@@ -60,19 +65,43 @@ void gameplay::display_stats(const std::unique_ptr<player>& game_player){
 };
 
 void gameplay::save_game(const std::unique_ptr<player>& game_player){
-    std::ofstream player_stats;
-    player_stats.open("progress_stats.txt");
-    player_stats << game_player->get_name() << std::endl;
-    player_stats << game_player->get_hp() << std::endl;
-    player_stats << game_player->get_max_hp() << std::endl;
-    player_stats << game_player->get_attackpoints() << std::endl;
-    player_stats << game_player->get_defencepoints() << std::endl;
-    player_stats << game_player->get_numfights() << std::endl;
-    player_stats << game_player->get_level() << std::endl;
-    player_stats.close();
+    // Save stats in a txt file
+    // std::ofstream player_stats;
+    // player_stats.open("progress_stats.txt");
+    // player_stats << game_player->get_name() << std::endl;
+    // player_stats << game_player->get_hp() << std::endl;
+    // player_stats << game_player->get_max_hp() << std::endl;
+    // player_stats << game_player->get_attackpoints() << std::endl;
+    // player_stats << game_player->get_defencepoints() << std::endl;
+    // player_stats << game_player->get_numfights() << std::endl;
+    // player_stats << game_player->get_level() << std::endl;
+    // player_stats << game_player->get_gold() << std::endl;
+    // player_stats.close();
+
+    // https://programmerall.com/article/9926612018/
+    // Json C++ parsing
+    // Save stats in a Json file
+    Json::Value jsonRoot; //Define root nodes
+    Json::Value jsonItem; //Define a child object
+    jsonItem["Name"] = game_player->get_name(); //adding data
+    jsonItem["HP"] = game_player->get_hp();
+    jsonItem["MaxHP"] = game_player->get_max_hp();
+    jsonItem["AttackPoints"] = game_player->get_attackpoints();
+    jsonItem["DefencePoints"] = game_player->get_defencepoints();
+    jsonItem["NumFights"] = game_player->get_numfights();
+    jsonItem["Level"] = game_player->get_level();
+    jsonItem["Gold"] = game_player->get_gold();
+    jsonRoot.append(jsonItem);
+
+    std::ofstream ofs; //Standard output flow
+    ofs.open("progress_stats.json"); //Create a file
+    ofs << jsonRoot.toStyledString(); //Output
+    ofs.close();
+
 };
 
 void gameplay::load_game(){
+    // Read stats from a txt file
     std::string line;
     std::ifstream player_stats("progress_stats.txt");
     if (player_stats.is_open()) {

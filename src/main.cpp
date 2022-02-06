@@ -52,6 +52,8 @@ int main(){
                 fighter hero_fighter(player_name, 100, 200, 50, 30);
                 good = std::make_unique<fighter>(hero_fighter);
                 std::cout << "You upgraded to a fighter!" << std::endl;
+                good->add_gold(10);
+                std::cout << "$$ You get 10 gold $$" << std::endl;
                 player_level_check = 1;         // Put a value of player_lelvel_check = 1 so that fighter level is not checked again
             }
             else if ((good->get_level() >= 5) && (player_level_check == 1)) {
@@ -59,6 +61,8 @@ int main(){
                 mage hero_mage(player_name, 200, 300, 100, 50, 20, 50, 0);
                 good = std::make_unique<mage>(hero_mage);
                 std::cout << "You upgraded to a mage!" << std::endl;
+                good->add_gold(20);
+                std::cout << "$$ You get 20 gold $$" << std::endl;
                 player_level_check = 2;         // Put a value of player_lelvel_check = 2 so that mage level is not checked again
             }
             
@@ -92,6 +96,8 @@ int main(){
                     if (!bad->is_alive()) {
                         std::cout << bad->get_name() << " died" << std::endl;
                         good->add_level();           // level up player after every successful fight
+                        good->add_gold(2);
+                        std::cout << "$$ You get 2 gold $$" << std::endl;
                     }
                     if (!good->is_alive()) {
                         std::cout << "You died" << std::endl;   // Not saving the round in which player died

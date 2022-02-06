@@ -27,6 +27,7 @@ int player::get_attackpoints(){return attack_points;}
 int player::get_defencepoints(){return defence_points;}
 int player::get_numfights(){return num_fights;}
 int player::get_level(){return level;}
+int player::get_gold(){return gold;}
 
 void player::showstats(){
     std::cout << "Name: " << name << std::endl;
@@ -34,7 +35,9 @@ void player::showstats(){
     std::cout << "Maximum HP: " << max_hp << std::endl;
     std::cout << "Attack Points: " << attack_points << std::endl;
     std::cout << "Defence Points: " << defence_points << std::endl;
+    std::cout << "You are a: " << get_position() << std::endl;
     std::cout << "Character Level: " << level << std::endl;
+    std::cout << "Money: " << gold << std::endl;
 }
 
 bool player::is_alive(){return (hp>0) ? true:false;}
@@ -47,3 +50,5 @@ bool player::is_criticalstrike(){return false;}
 int player::is_magicused(){return false;}
 
 int player::magic_attack(int spell_num){return 0;}
+
+void player::add_gold(int gold_amount){this->gold+=gold_amount;}
